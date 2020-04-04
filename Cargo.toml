@@ -1,0 +1,35 @@
+[package]
+name = "isl29125"
+version = "0.1.0"
+authors = ["Diego Barrios Romero <eldruin@gmail.com>"]
+repository = "https://github.com/eldruin/isl29125-rs"
+license = "MIT OR Apache-2.0"
+description = "Platform-agnostic Rust driver for the ISL29125 low-power digital RGB color light sensor with IR blocking filter."
+readme = "README.md"
+keywords = ["rgb", "color", "sensor", "ir", "embedded-hal-driver"]
+categories = ["embedded", "hardware-support", "no-std"]
+homepage = "https://github.com/eldruin/isl29125-rs"
+documentation = "https://docs.rs/isl29125"
+include = [
+    "/**/*.rs",
+    "/Cargo.toml",
+    "/README.md",
+    "/CHANGELOG.md",
+    "/LICENSE-MIT",
+    "/LICENSE-APACHE",
+]
+edition = "2018"
+
+[badges]
+travis-ci = { repository = "eldruin/isl29125-rs", branch = "master" }
+coveralls = { repository = "eldruin/isl29125-rs", branch = "master", service = "github" }
+
+[dependencies]
+embedded-hal = "0.2.3"
+
+[dev-dependencies]
+linux-embedded-hal = "0.3"
+embedded-hal-mock = "0.7"
+
+[profile.release]
+lto = true
