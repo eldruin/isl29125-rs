@@ -18,21 +18,6 @@ pub struct Measurement {
     pub blue: u16,
 }
 
-/// Status
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub struct Status {
-    /// Whether data is ready
-    pub data_ready: bool,
-    /// Whether the temperature high threshold was exceeded
-    pub high_temp_threshold_exceeded: bool,
-    /// Whether the temperature low threshold was exceeded
-    pub low_temp_threshold_exceeded: bool,
-    /// Whether the humidity high threshold was exceeded
-    pub high_humidity_threshold_exceeded: bool,
-    /// Whether the humidity low threshold was exceeded
-    pub low_humidity_threshold_exceeded: bool,
-}
-
 /// Operating mode
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum OperatingMode {
