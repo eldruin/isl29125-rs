@@ -46,18 +46,29 @@ fn can_get_measurement() {
     destroy(sensor);
 }
 
-#[test]
-fn can_set_mode_powerdown() {
-    let mut sensor = new(&[I2cTrans::write(ADDR, vec![Register::CONFIG1, 0])]);
-    sensor.set_operating_mode(OperatingMode::PowerDown).unwrap();
-    destroy(sensor);
+macro_rules! set_test {
+    ($name:ident, $method:ident, $reg:ident, $value:expr $(, $arg:expr)*) => {
+        #[test]
+        fn $name() {
+            let mut sensor = new(&[I2cTrans::write(ADDR, vec![Register::$reg, $value])]);
+            sensor.$method($($arg),*).unwrap();
+            destroy(sensor);
+        }
+    };
 }
 
-#[test]
-fn can_set_mode_rgb() {
-    let mut sensor = new(&[I2cTrans::write(ADDR, vec![Register::CONFIG1, 0b101])]);
-    sensor
-        .set_operating_mode(OperatingMode::RedGreenBlue)
-        .unwrap();
-    destroy(sensor);
-}
+set_test!(
+    set_mode_powerdown,
+    set_operating_mode,
+    CONFIG1,
+    0,
+    OperatingMode::PowerDown
+);
+set_test!(
+    set_mode_rgb,
+    set_operating_mode,
+    CONFIG1,
+    0b101,
+    OperatingMode::RedGreenBlue
+);
+
