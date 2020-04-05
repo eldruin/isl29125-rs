@@ -55,13 +55,10 @@ script:
 
 after_script: set +e
 
-cache: cargo
-cache:
-  directories:
-    - /home/travis/.cargo
-
 before_cache:
   bash ci/before_cache.sh
+
+cache: cargo
 
 notifications:
   email:
