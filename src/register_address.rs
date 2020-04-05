@@ -10,6 +10,11 @@ impl Register {
     pub const GREEN_L: u8 = 0x09;
 }
 
+pub struct BitFlags;
+impl BitFlags {
+    pub const RESOLUTION: u8 = 1 << 4;
+}
+
 impl<I2C, E> Isl29125<I2C>
 where
     I2C: i2c::Write<Error = E>,

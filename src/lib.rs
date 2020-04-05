@@ -64,9 +64,9 @@
 
 mod device_impl;
 mod types;
-pub use crate::types::{Error, Measurement, OperatingMode};
+pub use crate::types::{Error, Measurement, OperatingMode, Resolution};
 mod register_address;
-use crate::register_address::Register;
+use crate::register_address::{BitFlags, Register};
 
 /// ISL29125 device driver
 #[derive(Debug)]

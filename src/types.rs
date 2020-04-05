@@ -33,12 +33,32 @@ impl Default for OperatingMode {
     }
 }
 
+/// ADC resolution
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum Resolution {
+    /// 12-bit resolution
+    Bit12,
+    /// 16-bit resolution (default)
+    Bit16,
+}
+
+impl Default for Resolution {
+    fn default() -> Self {
+        Resolution::Bit16
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use super::OperatingMode;
+    use super::*;
 
     #[test]
     fn can_get_default_operating_mode() {
         assert_eq!(OperatingMode::PowerDown, OperatingMode::default());
+    }
+
+    #[test]
+    fn can_get_default_resolution() {
+        assert_eq!(Resolution::Bit16, Resolution::default());
     }
 }

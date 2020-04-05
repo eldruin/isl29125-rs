@@ -8,6 +8,12 @@ impl Register {
     pub const CONFIG1: u8 = 0x01;
     pub const GREEN_L: u8 = 0x09;
 }
+
+pub struct BitFlags;
+impl BitFlags {
+    pub const RESOLUTION: u8 = 1 << 4;
+}
+
 pub const ADDR: u8 = 0b100_0100;
 
 #[allow(unused)]

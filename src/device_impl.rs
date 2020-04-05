@@ -1,4 +1,4 @@
-use crate::{Config, Error, Isl29125, Measurement, OperatingMode, Register};
+use crate::{BitFlags, Config, Error, Isl29125, Measurement, OperatingMode, Register, Resolution};
 use embedded_hal::blocking::i2c;
 
 impl<I2C> Isl29125<I2C> {
@@ -44,6 +44,17 @@ where
         Ok(())
     }
 
+    /// Set ADC resolution
+    pub fn set_resolution(&mut self, resolution: Resolution) -> Result<(), Error<E>> {
+        let config1 = match resolution {
+            Resolution::Bit12 => self.config1.with_high(BitFlags::RESOLUTION),
+            Resolution::Bit16 => self.config1.with_low(BitFlags::RESOLUTION),
+        };
+        self.write_register(Register::CONFIG1, config1.bits)?;
+        self.config1 = config1;
+        Ok(())
+    }
+
     /// Get device ID (`0x7D`)
     pub fn device_id(&mut self) -> Result<u8, Error<E>> {
         self.read_register(Register::DEVICE_ID)
@@ -52,5 +63,18 @@ where
     /// Software reset
     pub fn reset(&mut self) -> Result<(), Error<E>> {
         self.write_register(Register::DEVICE_ID, 0x46)
+    }
+}
+
+impl Config {
+    fn with_high(self, mask: u8) -> Self {
+        Config {
+            bits: self.bits | mask,
+        }
+    }
+    fn with_low(self, mask: u8) -> Self {
+        Config {
+            bits: self.bits & !mask,
+        }
     }
 }

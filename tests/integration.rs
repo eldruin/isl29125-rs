@@ -1,7 +1,7 @@
 mod common;
-use crate::common::{destroy, new, Register, ADDR};
+use crate::common::{destroy, new, BitFlags as BF, Register, ADDR};
 use embedded_hal_mock::i2c::Transaction as I2cTrans;
-use isl29125::OperatingMode;
+use isl29125::{OperatingMode, Resolution};
 
 #[test]
 fn can_create_and_destroy() {
@@ -72,3 +72,17 @@ set_test!(
     OperatingMode::RedGreenBlue
 );
 
+set_test!(
+    set_resolution_12,
+    set_resolution,
+    CONFIG1,
+    BF::RESOLUTION,
+    Resolution::Bit12
+);
+set_test!(
+    set_resolution_16,
+    set_resolution,
+    CONFIG1,
+    0,
+    Resolution::Bit16
+);
