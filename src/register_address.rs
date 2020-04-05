@@ -1,7 +1,7 @@
 use crate::{Error, Isl29125};
 use embedded_hal::blocking::i2c;
 
-pub const ADDR: u8 = 0b1000100;
+pub const ADDR: u8 = 0b100_0100;
 
 pub struct Register;
 impl Register {

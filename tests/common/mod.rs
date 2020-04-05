@@ -8,7 +8,7 @@ impl Register {
     pub const CONFIG1: u8 = 0x01;
     pub const GREEN_L: u8 = 0x09;
 }
-pub const ADDR: u8 = 0b1000100;
+pub const ADDR: u8 = 0b100_0100;
 
 #[allow(unused)]
 pub fn new(transactions: &[I2cTrans]) -> Isl29125<I2cMock> {
