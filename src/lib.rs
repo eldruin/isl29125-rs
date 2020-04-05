@@ -47,7 +47,7 @@
 
 mod device_impl;
 mod types;
-pub use crate::types::Error;
+pub use crate::types::{Error, Measurement, OperatingMode};
 mod register_address;
 use crate::register_address::Register;
 
@@ -55,6 +55,7 @@ use crate::register_address::Register;
 #[derive(Debug)]
 pub struct Isl29125<I2C> {
     i2c: I2C,
+    config1: Config,
 }
 
 #[derive(Debug, Default, Clone, Copy)]

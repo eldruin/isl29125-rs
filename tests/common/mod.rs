@@ -5,6 +5,8 @@ pub struct Register;
 #[allow(unused)]
 impl Register {
     pub const DEVICE_ID: u8 = 0x00;
+    pub const CONFIG1: u8 = 0x01;
+    pub const GREEN_L: u8 = 0x09;
 }
 pub const ADDR: u8 = 0b1000100;
 
