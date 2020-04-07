@@ -38,10 +38,9 @@ where
             OperatingMode::PowerDown => 0,
             OperatingMode::RedGreenBlue => 0b101,
         };
-        let new_value = config1 | mask;
-        self.write_register(Register::CONFIG1, new_value)?;
-        self.config1.bits = new_value;
-        Ok(())
+        self.set_config1(Config {
+            bits: config1 | mask,
+        })
     }
 
     /// Set ADC resolution
@@ -50,6 +49,10 @@ where
             Resolution::Bit12 => self.config1.with_high(BitFlags::RESOLUTION),
             Resolution::Bit16 => self.config1.with_low(BitFlags::RESOLUTION),
         };
+        self.set_config1(config1)
+    }
+
+    fn set_config1(&mut self, config1: Config) -> Result<(), Error<E>> {
         self.write_register(Register::CONFIG1, config1.bits)?;
         self.config1 = config1;
         Ok(())
