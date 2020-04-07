@@ -69,7 +69,13 @@ macro_rules! set_operating_mode_test {
     };
 }
 set_operating_mode_test!(set_mode_powerdown, 0, PowerDown);
-set_operating_mode_test!(set_mode_rgb, 0b101, RedGreenBlue);
+set_operating_mode_test!(set_mode_green_only, 1, GreenOnly);
+set_operating_mode_test!(set_mode_red_only, 2, RedOnly);
+set_operating_mode_test!(set_mode_blue_only, 3, BlueOnly);
+set_operating_mode_test!(set_mode_stand_by, 4, StandBy);
+set_operating_mode_test!(set_mode_rgb, 5, RedGreenBlue);
+set_operating_mode_test!(set_mode_red_green, 6, RedGreen);
+set_operating_mode_test!(set_mode_green_blue, 7, GreenBlue);
 
 set_test!(
     set_resolution_12,

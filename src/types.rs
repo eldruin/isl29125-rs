@@ -23,6 +23,18 @@ pub struct Measurement {
 pub enum OperatingMode {
     /// Power-Down (ADC conversion)
     PowerDown,
+    /// Stand by (No ADC conversion)
+    StandBy,
+    /// Red only
+    RedOnly,
+    /// Green only
+    GreenOnly,
+    /// Blue only
+    BlueOnly,
+    /// Red/Green
+    RedGreen,
+    /// Green/Blue
+    GreenBlue,
     /// Red/Green/Blue
     RedGreenBlue,
 }

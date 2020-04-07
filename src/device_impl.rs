@@ -38,7 +38,13 @@ where
         let config1 = self.config1.bits & 0b1111_1000;
         let mask = match mode {
             OperatingMode::PowerDown => 0,
-            OperatingMode::RedGreenBlue => 0b101,
+            OperatingMode::GreenOnly => 1,
+            OperatingMode::RedOnly => 2,
+            OperatingMode::BlueOnly => 3,
+            OperatingMode::StandBy => 4,
+            OperatingMode::RedGreenBlue => 5,
+            OperatingMode::RedGreen => 6,
+            OperatingMode::GreenBlue => 7,
         };
         self.set_config1(Config {
             bits: config1 | mask,
