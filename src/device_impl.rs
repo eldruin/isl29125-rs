@@ -1,4 +1,6 @@
-use crate::{BitFlags, Config, Error, Isl29125, Measurement, OperatingMode, Register, Resolution};
+use crate::{
+    BitFlags, Config, Error, Isl29125, Measurement, OperatingMode, Range, Register, Resolution,
+};
 use embedded_hal::blocking::i2c;
 
 impl<I2C> Isl29125<I2C> {
@@ -48,6 +50,15 @@ where
         let config1 = match resolution {
             Resolution::Bit12 => self.config1.with_high(BitFlags::RESOLUTION),
             Resolution::Bit16 => self.config1.with_low(BitFlags::RESOLUTION),
+        };
+        self.set_config1(config1)
+    }
+
+    /// Set RGB data sensing range
+    pub fn set_range(&mut self, range: Range) -> Result<(), Error<E>> {
+        let config1 = match range {
+            Range::Lux375 => self.config1.with_low(BitFlags::RANGE),
+            Range::Lux10000 => self.config1.with_high(BitFlags::RANGE),
         };
         self.set_config1(config1)
     }

@@ -64,7 +64,7 @@
 
 mod device_impl;
 mod types;
-pub use crate::types::{Error, Measurement, OperatingMode, Resolution};
+pub use crate::types::{Error, Measurement, OperatingMode, Range, Resolution};
 mod register_address;
 use crate::register_address::{BitFlags, Register};
 

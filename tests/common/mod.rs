@@ -12,6 +12,7 @@ impl Register {
 pub struct BitFlags;
 impl BitFlags {
     pub const RESOLUTION: u8 = 1 << 4;
+    pub const RANGE: u8 = 1 << 3;
 }
 
 pub const ADDR: u8 = 0b100_0100;

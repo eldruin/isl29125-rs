@@ -48,6 +48,21 @@ impl Default for Resolution {
     }
 }
 
+/// RGB data sensing range
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum Range {
+    /// 375 lux
+    Lux375,
+    /// 10000 lux
+    Lux10000,
+}
+
+impl Default for Range {
+    fn default() -> Self {
+        Range::Lux375
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -60,5 +75,10 @@ mod tests {
     #[test]
     fn can_get_default_resolution() {
         assert_eq!(Resolution::Bit16, Resolution::default());
+    }
+
+    #[test]
+    fn can_get_default_range() {
+        assert_eq!(Range::Lux375, Range::default());
     }
 }
