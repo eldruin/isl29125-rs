@@ -57,20 +57,19 @@ macro_rules! set_test {
     };
 }
 
-set_test!(
-    set_mode_powerdown,
-    set_operating_mode,
-    CONFIG1,
-    0,
-    OperatingMode::PowerDown
-);
-set_test!(
-    set_mode_rgb,
-    set_operating_mode,
-    CONFIG1,
-    0b101,
-    OperatingMode::RedGreenBlue
-);
+macro_rules! set_operating_mode_test {
+    ($name:ident, $value:expr, $mode:ident) => {
+        set_test!(
+            $name,
+            set_operating_mode,
+            CONFIG1,
+            $value,
+            OperatingMode::$mode
+        );
+    };
+}
+set_operating_mode_test!(set_mode_powerdown, 0, PowerDown);
+set_operating_mode_test!(set_mode_rgb, 0b101, RedGreenBlue);
 
 set_test!(
     set_resolution_12,
