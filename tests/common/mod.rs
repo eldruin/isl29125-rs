@@ -11,6 +11,7 @@ impl Register {
 
 pub struct BitFlags;
 impl BitFlags {
+    pub const SYNC: u8 = 1 << 5;
     pub const RESOLUTION: u8 = 1 << 4;
     pub const RANGE: u8 = 1 << 3;
 }

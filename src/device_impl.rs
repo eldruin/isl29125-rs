@@ -1,5 +1,6 @@
 use crate::{
-    BitFlags, Config, Error, Isl29125, Measurement, OperatingMode, Range, Register, Resolution,
+    BitFlags, Config, Error, InterruptPinMode, Isl29125, Measurement, OperatingMode, Range,
+    Register, Resolution,
 };
 use embedded_hal::blocking::i2c;
 
@@ -65,6 +66,15 @@ where
         let config1 = match range {
             Range::Lux375 => self.config1.with_low(BitFlags::RANGE),
             Range::Lux10000 => self.config1.with_high(BitFlags::RANGE),
+        };
+        self.set_config1(config1)
+    }
+
+    /// Set interrupt pin (INT) mode (Interrupt / Synced conversion start)
+    pub fn set_interrupt_pin_mode(&mut self, mode: InterruptPinMode) -> Result<(), Error<E>> {
+        let config1 = match mode {
+            InterruptPinMode::Interrupt => self.config1.with_low(BitFlags::SYNC),
+            InterruptPinMode::SyncStart => self.config1.with_high(BitFlags::SYNC),
         };
         self.set_config1(config1)
     }

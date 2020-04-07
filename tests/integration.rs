@@ -1,7 +1,7 @@
 mod common;
 use crate::common::{destroy, new, BitFlags as BF, Register, ADDR};
 use embedded_hal_mock::i2c::Transaction as I2cTrans;
-use isl29125::{OperatingMode, Range, Resolution};
+use isl29125::{InterruptPinMode, OperatingMode, Range, Resolution};
 
 #[test]
 fn can_create_and_destroy() {
@@ -99,4 +99,19 @@ set_test!(
     CONFIG1,
     BF::RANGE,
     Range::Lux10000
+);
+
+set_test!(
+    set_int_mode_int,
+    set_interrupt_pin_mode,
+    CONFIG1,
+    0,
+    InterruptPinMode::Interrupt
+);
+set_test!(
+    set_int_mode_sync,
+    set_interrupt_pin_mode,
+    CONFIG1,
+    BF::SYNC,
+    InterruptPinMode::SyncStart
 );

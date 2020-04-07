@@ -75,6 +75,21 @@ impl Default for Range {
     }
 }
 
+/// Interrupt pin (INT) mode
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum InterruptPinMode {
+    /// Interrupts will be generated on exceeded thresholds. (ADC starts when writing to the config 1 register)
+    Interrupt,
+    /// INT pin is an input. ADC conversion starts on the rising edge at the INT pin.
+    SyncStart,
+}
+
+impl Default for InterruptPinMode {
+    fn default() -> Self {
+        InterruptPinMode::Interrupt
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -92,5 +107,10 @@ mod tests {
     #[test]
     fn can_get_default_range() {
         assert_eq!(Range::Lux375, Range::default());
+    }
+
+    #[test]
+    fn can_get_default_int_pin_mode() {
+        assert_eq!(InterruptPinMode::Interrupt, InterruptPinMode::default());
     }
 }
