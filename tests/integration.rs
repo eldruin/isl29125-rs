@@ -1,7 +1,7 @@
 mod common;
 use crate::common::{destroy, new, BitFlags as BF, Register, ADDR};
 use embedded_hal_mock::i2c::Transaction as I2cTrans;
-use isl29125::{InterruptPinMode, OperatingMode, Range, Resolution};
+use isl29125::{IRFilteringRange, InterruptPinMode, OperatingMode, Range, Resolution};
 
 #[test]
 fn can_create_and_destroy() {
@@ -114,4 +114,31 @@ set_test!(
     CONFIG1,
     BF::SYNC,
     InterruptPinMode::SyncStart
+);
+
+#[test]
+fn cannot_set_wrong_ir_adjust() {
+    let mut sensor = new(&[]);
+    sensor
+        .set_ir_filtering(IRFilteringRange::Lower, 64)
+        .expect_err("Should return error.");
+    destroy(sensor);
+}
+
+set_test!(
+    set_ir_filtering_lower,
+    set_ir_filtering,
+    CONFIG2,
+    63,
+    IRFilteringRange::Lower,
+    63
+);
+
+set_test!(
+    set_ir_filtering_higher,
+    set_ir_filtering,
+    CONFIG2,
+    BF::IR_OFFSET | 63,
+    IRFilteringRange::Higher,
+    63
 );

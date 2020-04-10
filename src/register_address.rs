@@ -7,6 +7,7 @@ pub struct Register;
 impl Register {
     pub const DEVICE_ID: u8 = 0x00;
     pub const CONFIG1: u8 = 0x01;
+    pub const CONFIG2: u8 = 0x02;
     pub const GREEN_L: u8 = 0x09;
 }
 
@@ -15,6 +16,7 @@ impl BitFlags {
     pub const SYNC: u8 = 1 << 5;
     pub const RESOLUTION: u8 = 1 << 4;
     pub const RANGE: u8 = 1 << 3;
+    pub const IR_OFFSET: u8 = 1 << 7;
 }
 
 impl<I2C, E> Isl29125<I2C>

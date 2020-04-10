@@ -1,6 +1,6 @@
 use crate::{
-    BitFlags, Config, Error, InterruptPinMode, Isl29125, Measurement, OperatingMode, Range,
-    Register, Resolution,
+    BitFlags, Config, Error, IRFilteringRange, InterruptPinMode, Isl29125, Measurement,
+    OperatingMode, Range, Register, Resolution,
 };
 use embedded_hal::blocking::i2c;
 
@@ -77,6 +77,26 @@ where
             InterruptPinMode::SyncStart => self.config1.with_high(BitFlags::SYNC),
         };
         self.set_config1(config1)
+    }
+
+    /// Set IR filtering
+    ///
+    /// The IR adjust must be a value in the range `[0-63]`. Providing a
+    /// value outside this range will return `Error::InvalidInputData`.
+    pub fn set_ir_filtering(
+        &mut self,
+        range: IRFilteringRange,
+        ir_adjust: u8,
+    ) -> Result<(), Error<E>> {
+        if ir_adjust > 63 {
+            Err(Error::InvalidInputData)
+        } else {
+            let ir_comp = match range {
+                IRFilteringRange::Lower => ir_adjust,
+                IRFilteringRange::Higher => BitFlags::IR_OFFSET | ir_adjust,
+            };
+            self.write_register(Register::CONFIG2, ir_comp)
+        }
     }
 
     fn set_config1(&mut self, config1: Config) -> Result<(), Error<E>> {
