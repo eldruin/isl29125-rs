@@ -1,7 +1,10 @@
 mod common;
 use crate::common::{destroy, new, BitFlags as BF, Register, ADDR};
 use embedded_hal_mock::i2c::Transaction as I2cTrans;
-use isl29125::{IRFilteringRange, InterruptPinMode, OperatingMode, Range, Resolution};
+use isl29125::{
+    IRFilteringRange, InterruptPinMode, InterruptThresholdAssignment, OperatingMode, Range,
+    Resolution,
+};
 
 #[test]
 fn can_create_and_destroy() {
@@ -141,4 +144,33 @@ set_test!(
     BF::IR_OFFSET | 63,
     IRFilteringRange::Higher,
     63
+);
+
+set_test!(
+    set_int_th_assign_none,
+    set_interrupt_threshold_assignment,
+    CONFIG3,
+    0,
+    InterruptThresholdAssignment::None
+);
+set_test!(
+    set_int_th_assign_green,
+    set_interrupt_threshold_assignment,
+    CONFIG3,
+    1,
+    InterruptThresholdAssignment::Green
+);
+set_test!(
+    set_int_th_assign_red,
+    set_interrupt_threshold_assignment,
+    CONFIG3,
+    2,
+    InterruptThresholdAssignment::Red
+);
+set_test!(
+    set_int_th_assign_blue,
+    set_interrupt_threshold_assignment,
+    CONFIG3,
+    3,
+    InterruptThresholdAssignment::Blue
 );

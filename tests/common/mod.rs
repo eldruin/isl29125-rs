@@ -7,6 +7,7 @@ impl Register {
     pub const DEVICE_ID: u8 = 0x00;
     pub const CONFIG1: u8 = 0x01;
     pub const CONFIG2: u8 = 0x02;
+    pub const CONFIG3: u8 = 0x03;
     pub const GREEN_L: u8 = 0x09;
 }
 

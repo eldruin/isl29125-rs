@@ -105,6 +105,25 @@ impl Default for IRFilteringRange {
     }
 }
 
+/// Interrupt threshold assignment
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum InterruptThresholdAssignment {
+    /// No interrupt (default)
+    None,
+    /// Use interrupt thresholds on red channel data.
+    Red,
+    /// Use interrupt thresholds on green channel data.
+    Green,
+    /// Use interrupt thresholds on blue channel data.
+    Blue,
+}
+
+impl Default for InterruptThresholdAssignment {
+    fn default() -> Self {
+        InterruptThresholdAssignment::None
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -132,5 +151,13 @@ mod tests {
     #[test]
     fn can_get_default_ir_filtering_range() {
         assert_eq!(IRFilteringRange::Lower, IRFilteringRange::default());
+    }
+
+    #[test]
+    fn can_get_default_int_threshold_assignment() {
+        assert_eq!(
+            InterruptThresholdAssignment::None,
+            InterruptThresholdAssignment::default()
+        );
     }
 }

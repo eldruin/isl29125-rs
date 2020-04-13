@@ -65,7 +65,8 @@
 mod device_impl;
 mod types;
 pub use crate::types::{
-    Error, IRFilteringRange, InterruptPinMode, Measurement, OperatingMode, Range, Resolution,
+    Error, IRFilteringRange, InterruptPinMode, InterruptThresholdAssignment, Measurement,
+    OperatingMode, Range, Resolution,
 };
 mod register_address;
 use crate::register_address::{BitFlags, Register};
@@ -75,6 +76,7 @@ use crate::register_address::{BitFlags, Register};
 pub struct Isl29125<I2C> {
     i2c: I2C,
     config1: Config,
+    config3: Config,
 }
 
 #[derive(Debug, Default, Clone, Copy)]

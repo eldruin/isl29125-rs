@@ -1,6 +1,6 @@
 use crate::{
-    BitFlags, Config, Error, IRFilteringRange, InterruptPinMode, Isl29125, Measurement,
-    OperatingMode, Range, Register, Resolution,
+    BitFlags, Config, Error, IRFilteringRange, InterruptPinMode, InterruptThresholdAssignment,
+    Isl29125, Measurement, OperatingMode, Range, Register, Resolution,
 };
 use embedded_hal::blocking::i2c;
 
@@ -10,6 +10,7 @@ impl<I2C> Isl29125<I2C> {
         Isl29125 {
             i2c,
             config1: Config { bits: 0 },
+            config3: Config { bits: 0 },
         }
     }
 
@@ -70,15 +71,6 @@ where
         self.set_config1(config1)
     }
 
-    /// Set interrupt pin (INT) mode (Interrupt / Synced conversion start)
-    pub fn set_interrupt_pin_mode(&mut self, mode: InterruptPinMode) -> Result<(), Error<E>> {
-        let config1 = match mode {
-            InterruptPinMode::Interrupt => self.config1.with_low(BitFlags::SYNC),
-            InterruptPinMode::SyncStart => self.config1.with_high(BitFlags::SYNC),
-        };
-        self.set_config1(config1)
-    }
-
     /// Set IR filtering
     ///
     /// The IR adjust must be a value in the range `[0-63]`. Providing a
@@ -97,6 +89,32 @@ where
             };
             self.write_register(Register::CONFIG2, ir_comp)
         }
+    }
+
+    /// Set interrupt pin (INT) mode (Interrupt / Synced conversion start)
+    pub fn set_interrupt_pin_mode(&mut self, mode: InterruptPinMode) -> Result<(), Error<E>> {
+        let config1 = match mode {
+            InterruptPinMode::Interrupt => self.config1.with_low(BitFlags::SYNC),
+            InterruptPinMode::SyncStart => self.config1.with_high(BitFlags::SYNC),
+        };
+        self.set_config1(config1)
+    }
+
+    /// Set color channel used for threshold value interrupt generation
+    pub fn set_interrupt_threshold_assignment(
+        &mut self,
+        assignment: InterruptThresholdAssignment,
+    ) -> Result<(), Error<E>> {
+        let config3 = self.config3.bits & 0b1111_1100;
+        let config3 = match assignment {
+            InterruptThresholdAssignment::None => config3,
+            InterruptThresholdAssignment::Green => config3 | 1,
+            InterruptThresholdAssignment::Red => config3 | 2,
+            InterruptThresholdAssignment::Blue => config3 | 3,
+        };
+        self.write_register(Register::CONFIG3, config3)?;
+        self.config3 = Config { bits: config3 };
+        Ok(())
     }
 
     fn set_config1(&mut self, config1: Config) -> Result<(), Error<E>> {
