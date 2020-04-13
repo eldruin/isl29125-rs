@@ -9,6 +9,7 @@ impl Register {
     pub const CONFIG2: u8 = 0x02;
     pub const CONFIG3: u8 = 0x03;
     pub const THL: u8 = 0x04;
+    pub const STATUS: u8 = 0x08;
     pub const GREEN_L: u8 = 0x09;
 }
 
@@ -19,6 +20,9 @@ impl BitFlags {
     pub const RANGE: u8 = 1 << 3;
     pub const IR_OFFSET: u8 = 1 << 7;
     pub const CONVEN: u8 = 1 << 4;
+    pub const BOUTF: u8 = 1 << 2;
+    pub const CONVENF: u8 = 1 << 1;
+    pub const RGBTHF: u8 = 1;
 }
 
 pub const ADDR: u8 = 0b100_0100;

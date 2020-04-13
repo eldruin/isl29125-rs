@@ -146,6 +146,38 @@ impl Default for FaultCount {
     }
 }
 
+/// Status
+#[derive(Debug, Default, Clone, Copy, PartialEq)]
+pub struct Status {
+    /// Whether an interrupt was triggered
+    pub interrupt_triggered: bool,
+    /// Whether a conversion was completed
+    pub conversion_completed: bool,
+    /// Whether a power-down or brownout condition occurred
+    pub brownout: bool,
+    /// Wheter a color channel is under conversion
+    pub converting: ConversionStatus,
+}
+
+/// RGB conversion status
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum ConversionStatus {
+    /// No operation
+    NoOperation,
+    /// Red
+    Red,
+    /// Green
+    Green,
+    /// Blue
+    Blue,
+}
+
+impl Default for ConversionStatus {
+    fn default() -> Self {
+        ConversionStatus::NoOperation
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -186,5 +218,18 @@ mod tests {
     #[test]
     fn can_get_default_fault_count() {
         assert_eq!(FaultCount::One, FaultCount::default());
+    }
+
+    #[test]
+    fn can_get_default_status() {
+        assert_eq!(
+            Status {
+                interrupt_triggered: false,
+                conversion_completed: false,
+                brownout: false,
+                converting: ConversionStatus::NoOperation
+            },
+            Status::default()
+        );
     }
 }

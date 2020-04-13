@@ -1,7 +1,7 @@
 use crate::{
-    BitFlags, Config, Error, FaultCount, IRFilteringRange, InterruptPinMode,
+    BitFlags, Config, ConversionStatus, Error, FaultCount, IRFilteringRange, InterruptPinMode,
     InterruptThresholdAssignment, Isl29125, Measurement, OperatingMode, Range, Register,
-    Resolution,
+    Resolution, Status,
 };
 use embedded_hal::blocking::i2c;
 
@@ -142,6 +142,32 @@ where
     /// Set interrupt thresholds
     pub fn set_interrupt_thresholds(&mut self, low: u16, high: u16) -> Result<(), Error<E>> {
         self.write_thresholds(low, high)
+    }
+
+    /// Read the status
+    ///
+    /// This clears the both the INT output and the interrupt triggered status flag.
+    pub fn status(&mut self) -> Result<Status, Error<E>> {
+        let status = self.read_register(Register::STATUS)?;
+        let converting = match (status & (3 << 4)) >> 4 {
+            0 => ConversionStatus::NoOperation,
+            1 => ConversionStatus::Green,
+            2 => ConversionStatus::Red,
+            _ => ConversionStatus::Blue,
+        };
+        Ok(Status {
+            interrupt_triggered: (status & BitFlags::RGBTHF) != 0,
+            conversion_completed: (status & BitFlags::CONVENF) != 0,
+            brownout: (status & BitFlags::BOUTF) != 0,
+            converting,
+        })
+    }
+
+    /// Clear the status.
+    ///
+    /// This must be called after power-up to clear the brownout condition flag.
+    pub fn clear_status(&mut self) -> Result<(), Error<E>> {
+        self.write_register(Register::STATUS, 0)
     }
 
     fn set_config3(&mut self, config3: Config) -> Result<(), Error<E>> {

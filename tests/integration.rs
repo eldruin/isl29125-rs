@@ -2,8 +2,8 @@ mod common;
 use crate::common::{destroy, new, BitFlags as BF, Register, ADDR};
 use embedded_hal_mock::i2c::Transaction as I2cTrans;
 use isl29125::{
-    FaultCount, IRFilteringRange, InterruptPinMode, InterruptThresholdAssignment, OperatingMode,
-    Range, Resolution,
+    ConversionStatus as CS, FaultCount, IRFilteringRange, InterruptPinMode,
+    InterruptThresholdAssignment, OperatingMode, Range, Resolution, Status,
 };
 
 #[test]
@@ -195,3 +195,29 @@ fn can_set_interrupt_thresholds() {
     sensor.set_interrupt_thresholds(0x1234, 0x5678).unwrap();
     destroy(sensor);
 }
+
+macro_rules! get_status_test {
+    ($name:ident, $value:expr, $expected_member:ident, $expected_value:expr) => {
+        #[test]
+        fn $name() {
+            let mut sensor = new(&[I2cTrans::write_read(
+                ADDR,
+                vec![Register::STATUS],
+                vec![$value],
+            )]);
+            let mut expected = Status::default();
+            expected.$expected_member = $expected_value;
+            let status = sensor.status().unwrap();
+            assert_eq!(status, expected);
+            destroy(sensor);
+        }
+    };
+}
+
+get_status_test!(get_status_default, 0, interrupt_triggered, false);
+get_status_test!(get_status_int, BF::RGBTHF, interrupt_triggered, true);
+get_status_test!(get_status_conv, BF::CONVENF, conversion_completed, true);
+get_status_test!(get_status_brownout, BF::BOUTF, brownout, true);
+get_status_test!(get_status_converting_g, 1 << 4, converting, CS::Green);
+get_status_test!(get_status_converting_r, 2 << 4, converting, CS::Red);
+get_status_test!(get_status_converting_b, 3 << 4, converting, CS::Blue);

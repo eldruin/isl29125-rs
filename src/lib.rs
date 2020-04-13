@@ -65,8 +65,8 @@
 mod device_impl;
 mod types;
 pub use crate::types::{
-    Error, FaultCount, IRFilteringRange, InterruptPinMode, InterruptThresholdAssignment,
-    Measurement, OperatingMode, Range, Resolution,
+    ConversionStatus, Error, FaultCount, IRFilteringRange, InterruptPinMode,
+    InterruptThresholdAssignment, Measurement, OperatingMode, Range, Resolution, Status,
 };
 mod register_address;
 use crate::register_address::{BitFlags, Register};
