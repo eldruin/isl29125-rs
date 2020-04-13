@@ -17,6 +17,7 @@ impl BitFlags {
     pub const RESOLUTION: u8 = 1 << 4;
     pub const RANGE: u8 = 1 << 3;
     pub const IR_OFFSET: u8 = 1 << 7;
+    pub const CONVEN: u8 = 1 << 4;
 }
 
 pub const ADDR: u8 = 0b100_0100;

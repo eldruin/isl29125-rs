@@ -172,3 +172,16 @@ set_fc_test!(set_fault_count_one, 0, One);
 set_fc_test!(set_fault_count_two, 1 << 2, Two);
 set_fc_test!(set_fault_count_four, 2 << 2, Four);
 set_fc_test!(set_fault_count_eight, 3 << 2, Eight);
+
+set_test!(
+    enable_int_on_conv_done,
+    enable_interrupt_on_conversion_done,
+    CONFIG3,
+    BF::CONVEN
+);
+set_test!(
+    disable_int_on_conv_done,
+    disable_interrupt_on_conversion_done,
+    CONFIG3,
+    0
+);

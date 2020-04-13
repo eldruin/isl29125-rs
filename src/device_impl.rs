@@ -129,6 +129,16 @@ where
         self.set_config3(Config { bits: config3 })
     }
 
+    /// Enable generating an interrupt after a conversion is done
+    pub fn enable_interrupt_on_conversion_done(&mut self) -> Result<(), Error<E>> {
+        self.set_config3(self.config3.with_high(BitFlags::CONVEN))
+    }
+
+    /// Disable generating an interrupt after a conversion is done
+    pub fn disable_interrupt_on_conversion_done(&mut self) -> Result<(), Error<E>> {
+        self.set_config3(self.config3.with_low(BitFlags::CONVEN))
+    }
+
     fn set_config3(&mut self, config3: Config) -> Result<(), Error<E>> {
         self.write_register(Register::CONFIG3, config3.bits)?;
         self.config3 = config3;
