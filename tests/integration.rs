@@ -229,6 +229,8 @@ get_status_test!(get_status_converting_g, 1 << 4, converting, CS::Green);
 get_status_test!(get_status_converting_r, 2 << 4, converting, CS::Red);
 get_status_test!(get_status_converting_b, 3 << 4, converting, CS::Blue);
 
+set_test!(can_clear_status, clear_status, STATUS, 0);
+
 macro_rules! get_color_test {
     ($name:ident, $register:ident, $method:ident) => {
         #[test]
