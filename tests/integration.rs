@@ -185,3 +185,13 @@ set_test!(
     CONFIG3,
     0
 );
+
+#[test]
+fn can_set_interrupt_thresholds() {
+    let mut sensor = new(&[I2cTrans::write(
+        ADDR,
+        vec![Register::THL, 0x34, 0x12, 0x78, 0x56],
+    )]);
+    sensor.set_interrupt_thresholds(0x1234, 0x5678).unwrap();
+    destroy(sensor);
+}

@@ -9,6 +9,7 @@ impl Register {
     pub const CONFIG1: u8 = 0x01;
     pub const CONFIG2: u8 = 0x02;
     pub const CONFIG3: u8 = 0x03;
+    pub const THL: u8 = 0x04;
     pub const GREEN_L: u8 = 0x09;
 }
 
@@ -27,6 +28,17 @@ where
 {
     pub(crate) fn write_register(&mut self, register: u8, data: u8) -> Result<(), Error<E>> {
         let payload: [u8; 2] = [register, data];
+        self.i2c.write(ADDR, &payload).map_err(Error::I2C)
+    }
+
+    pub(crate) fn write_thresholds(&mut self, low: u16, high: u16) -> Result<(), Error<E>> {
+        let payload: [u8; 5] = [
+            Register::THL,
+            (low & 0xFF) as u8,
+            ((low & 0xFF00) >> 8) as u8,
+            (high & 0xFF) as u8,
+            ((high & 0xFF00) >> 8) as u8,
+        ];
         self.i2c.write(ADDR, &payload).map_err(Error::I2C)
     }
 }

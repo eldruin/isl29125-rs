@@ -8,6 +8,7 @@ impl Register {
     pub const CONFIG1: u8 = 0x01;
     pub const CONFIG2: u8 = 0x02;
     pub const CONFIG3: u8 = 0x03;
+    pub const THL: u8 = 0x04;
     pub const GREEN_L: u8 = 0x09;
 }
 

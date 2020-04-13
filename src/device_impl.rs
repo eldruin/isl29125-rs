@@ -139,6 +139,11 @@ where
         self.set_config3(self.config3.with_low(BitFlags::CONVEN))
     }
 
+    /// Set interrupt thresholds
+    pub fn set_interrupt_thresholds(&mut self, low: u16, high: u16) -> Result<(), Error<E>> {
+        self.write_thresholds(low, high)
+    }
+
     fn set_config3(&mut self, config3: Config) -> Result<(), Error<E>> {
         self.write_register(Register::CONFIG3, config3.bits)?;
         self.config3 = config3;
