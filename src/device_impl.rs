@@ -36,6 +36,21 @@ where
         })
     }
 
+    /// Read red color
+    pub fn red(&mut self) -> Result<u16, Error<E>> {
+        self.read_color(Register::RED_L)
+    }
+
+    /// Read green color
+    pub fn green(&mut self) -> Result<u16, Error<E>> {
+        self.read_color(Register::GREEN_L)
+    }
+
+    /// Read blue color
+    pub fn blue(&mut self) -> Result<u16, Error<E>> {
+        self.read_color(Register::BLUE_L)
+    }
+
     /// Set operating mode
     pub fn set_operating_mode(&mut self, mode: OperatingMode) -> Result<(), Error<E>> {
         let config1 = self.config1.bits & 0b1111_1000;

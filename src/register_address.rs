@@ -12,6 +12,8 @@ impl Register {
     pub const THL: u8 = 0x04;
     pub const STATUS: u8 = 0x08;
     pub const GREEN_L: u8 = 0x09;
+    pub const RED_L: u8 = 0x0B;
+    pub const BLUE_L: u8 = 0x0D;
 }
 
 pub struct BitFlags;
@@ -54,6 +56,12 @@ where
     pub(crate) fn read_register(&mut self, register: u8) -> Result<u8, Error<E>> {
         let mut data = [0];
         self.read_data(register, &mut data).and(Ok(data[0]))
+    }
+
+    pub(crate) fn read_color(&mut self, register: u8) -> Result<u16, Error<E>> {
+        let mut data = [0; 2];
+        self.read_data(register, &mut data)
+            .and(Ok(u16::from(data[0]) | (u16::from(data[1]) << 8)))
     }
 
     pub(crate) fn read_data(&mut self, register: u8, data: &mut [u8]) -> Result<(), Error<E>> {

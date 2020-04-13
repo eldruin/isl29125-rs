@@ -221,3 +221,22 @@ get_status_test!(get_status_brownout, BF::BOUTF, brownout, true);
 get_status_test!(get_status_converting_g, 1 << 4, converting, CS::Green);
 get_status_test!(get_status_converting_r, 2 << 4, converting, CS::Red);
 get_status_test!(get_status_converting_b, 3 << 4, converting, CS::Blue);
+
+macro_rules! get_color_test {
+    ($name:ident, $register:ident, $method:ident) => {
+        #[test]
+        fn $name() {
+            let mut sensor = new(&[I2cTrans::write_read(
+                ADDR,
+                vec![Register::$register],
+                vec![0x34, 0x12],
+            )]);
+            let value = sensor.$method().unwrap();
+            assert_eq!(value, 0x1234);
+            destroy(sensor);
+        }
+    };
+}
+get_color_test!(get_color_red, RED_L, red);
+get_color_test!(get_color_green, GREEN_L, green);
+get_color_test!(get_color_blue, BLUE_L, blue);

@@ -11,6 +11,8 @@ impl Register {
     pub const THL: u8 = 0x04;
     pub const STATUS: u8 = 0x08;
     pub const GREEN_L: u8 = 0x09;
+    pub const RED_L: u8 = 0x0B;
+    pub const BLUE_L: u8 = 0x0D;
 }
 
 pub struct BitFlags;
