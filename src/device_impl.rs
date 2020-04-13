@@ -1,6 +1,7 @@
 use crate::{
-    BitFlags, Config, Error, IRFilteringRange, InterruptPinMode, InterruptThresholdAssignment,
-    Isl29125, Measurement, OperatingMode, Range, Register, Resolution,
+    BitFlags, Config, Error, FaultCount, IRFilteringRange, InterruptPinMode,
+    InterruptThresholdAssignment, Isl29125, Measurement, OperatingMode, Range, Register,
+    Resolution,
 };
 use embedded_hal::blocking::i2c;
 
@@ -112,8 +113,25 @@ where
             InterruptThresholdAssignment::Red => config3 | 2,
             InterruptThresholdAssignment::Blue => config3 | 3,
         };
-        self.write_register(Register::CONFIG3, config3)?;
-        self.config3 = Config { bits: config3 };
+        self.set_config3(Config { bits: config3 })
+    }
+
+    /// Set number of consecutive fault events necessary to trigger an interrupt.
+    /// This is referred to as "persistence" in the documentation.
+    pub fn set_fault_count(&mut self, fault_count: FaultCount) -> Result<(), Error<E>> {
+        let config3 = self.config3.bits & 0b1111_0011;
+        let config3 = match fault_count {
+            FaultCount::One => config3,
+            FaultCount::Two => config3 | (1 << 2),
+            FaultCount::Four => config3 | (2 << 2),
+            FaultCount::Eight => config3 | (3 << 2),
+        };
+        self.set_config3(Config { bits: config3 })
+    }
+
+    fn set_config3(&mut self, config3: Config) -> Result<(), Error<E>> {
+        self.write_register(Register::CONFIG3, config3.bits)?;
+        self.config3 = config3;
         Ok(())
     }
 

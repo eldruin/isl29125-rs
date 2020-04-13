@@ -124,6 +124,28 @@ impl Default for InterruptThresholdAssignment {
     }
 }
 
+/// Fault count
+///
+/// Number of consecutive fault events necessary to trigger interrupt.
+/// This is referred to as "persistence" in the documentation.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum FaultCount {
+    /// One (default)
+    One,
+    /// Two
+    Two,
+    /// Four
+    Four,
+    /// Eight
+    Eight,
+}
+
+impl Default for FaultCount {
+    fn default() -> Self {
+        FaultCount::One
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -159,5 +181,10 @@ mod tests {
             InterruptThresholdAssignment::None,
             InterruptThresholdAssignment::default()
         );
+    }
+
+    #[test]
+    fn can_get_default_fault_count() {
+        assert_eq!(FaultCount::One, FaultCount::default());
     }
 }

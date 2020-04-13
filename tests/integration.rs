@@ -2,8 +2,8 @@ mod common;
 use crate::common::{destroy, new, BitFlags as BF, Register, ADDR};
 use embedded_hal_mock::i2c::Transaction as I2cTrans;
 use isl29125::{
-    IRFilteringRange, InterruptPinMode, InterruptThresholdAssignment, OperatingMode, Range,
-    Resolution,
+    FaultCount, IRFilteringRange, InterruptPinMode, InterruptThresholdAssignment, OperatingMode,
+    Range, Resolution,
 };
 
 #[test]
@@ -146,31 +146,29 @@ set_test!(
     63
 );
 
-set_test!(
-    set_int_th_assign_none,
-    set_interrupt_threshold_assignment,
-    CONFIG3,
-    0,
-    InterruptThresholdAssignment::None
-);
-set_test!(
-    set_int_th_assign_green,
-    set_interrupt_threshold_assignment,
-    CONFIG3,
-    1,
-    InterruptThresholdAssignment::Green
-);
-set_test!(
-    set_int_th_assign_red,
-    set_interrupt_threshold_assignment,
-    CONFIG3,
-    2,
-    InterruptThresholdAssignment::Red
-);
-set_test!(
-    set_int_th_assign_blue,
-    set_interrupt_threshold_assignment,
-    CONFIG3,
-    3,
-    InterruptThresholdAssignment::Blue
-);
+macro_rules! set_int_th_assign_test {
+    ($name:ident, $value:expr, $mode:ident) => {
+        set_test!(
+            $name,
+            set_interrupt_threshold_assignment,
+            CONFIG3,
+            $value,
+            InterruptThresholdAssignment::$mode
+        );
+    };
+}
+
+set_int_th_assign_test!(set_int_th_assign_none, 0, None);
+set_int_th_assign_test!(set_int_th_assign_green, 1, Green);
+set_int_th_assign_test!(set_int_th_assign_red, 2, Red);
+set_int_th_assign_test!(set_int_th_assign_blue, 3, Blue);
+
+macro_rules! set_fc_test {
+    ($name:ident, $value:expr, $mode:ident) => {
+        set_test!($name, set_fault_count, CONFIG3, $value, FaultCount::$mode);
+    };
+}
+set_fc_test!(set_fault_count_one, 0, One);
+set_fc_test!(set_fault_count_two, 1 << 2, Two);
+set_fc_test!(set_fault_count_four, 2 << 2, Four);
+set_fc_test!(set_fault_count_eight, 3 << 2, Eight);
