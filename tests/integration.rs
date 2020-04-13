@@ -120,10 +120,19 @@ set_test!(
 );
 
 #[test]
-fn cannot_set_wrong_ir_adjust() {
+fn cannot_set_wrong_lower_ir_adjust() {
     let mut sensor = new(&[]);
     sensor
-        .set_ir_filtering(IRFilteringRange::Lower, 64)
+        .set_ir_filtering(IRFilteringRange::Lower(64))
+        .expect_err("Should return error.");
+    destroy(sensor);
+}
+
+#[test]
+fn cannot_set_wrong_higher_ir_adjust() {
+    let mut sensor = new(&[]);
+    sensor
+        .set_ir_filtering(IRFilteringRange::Higher(64))
         .expect_err("Should return error.");
     destroy(sensor);
 }
@@ -133,8 +142,7 @@ set_test!(
     set_ir_filtering,
     CONFIG2,
     63,
-    IRFilteringRange::Lower,
-    63
+    IRFilteringRange::Lower(63)
 );
 
 set_test!(
@@ -142,8 +150,7 @@ set_test!(
     set_ir_filtering,
     CONFIG2,
     BF::IR_OFFSET | 63,
-    IRFilteringRange::Higher,
-    63
+    IRFilteringRange::Higher(63)
 );
 
 macro_rules! set_int_th_assign_test {

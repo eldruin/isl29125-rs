@@ -89,22 +89,16 @@ where
 
     /// Set IR filtering
     ///
-    /// The IR adjust must be a value in the range `[0-63]`. Providing a
+    /// The IR adjust value must be in the range `[0-63]`. Providing a
     /// value outside this range will return `Error::InvalidInputData`.
-    pub fn set_ir_filtering(
-        &mut self,
-        range: IRFilteringRange,
-        ir_adjust: u8,
-    ) -> Result<(), Error<E>> {
-        if ir_adjust > 63 {
-            Err(Error::InvalidInputData)
-        } else {
-            let ir_comp = match range {
-                IRFilteringRange::Lower => ir_adjust,
-                IRFilteringRange::Higher => BitFlags::IR_OFFSET | ir_adjust,
-            };
-            self.write_register(Register::CONFIG2, ir_comp)
-        }
+    pub fn set_ir_filtering(&mut self, range: IRFilteringRange) -> Result<(), Error<E>> {
+        let ir_comp = match range {
+            IRFilteringRange::Lower(v) if v > 63 => return Err(Error::InvalidInputData),
+            IRFilteringRange::Lower(v) => v,
+            IRFilteringRange::Higher(v) if v > 63 => return Err(Error::InvalidInputData),
+            IRFilteringRange::Higher(v) => BitFlags::IR_OFFSET | v,
+        };
+        self.write_register(Register::CONFIG2, ir_comp)
     }
 
     /// Set interrupt pin (INT) mode (Interrupt / Synced conversion start)

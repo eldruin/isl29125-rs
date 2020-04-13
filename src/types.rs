@@ -93,15 +93,19 @@ impl Default for InterruptPinMode {
 /// IR filtering range
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum IRFilteringRange {
-    /// Lower range (0-63, no offset)
-    Lower,
-    /// Higher range (0-63 corresponds to 106-169)
-    Higher,
+    /// Lower range
+    ///
+    /// The value must be in the range `[0-63]` (no offset)
+    Lower(u8),
+    /// Higher range
+    ///
+    /// The value must be in the range `[0-63]` (this corresponds to 106-169)
+    Higher(u8),
 }
 
 impl Default for IRFilteringRange {
     fn default() -> Self {
-        IRFilteringRange::Lower
+        IRFilteringRange::Lower(0)
     }
 }
 
@@ -204,7 +208,7 @@ mod tests {
 
     #[test]
     fn can_get_default_ir_filtering_range() {
-        assert_eq!(IRFilteringRange::Lower, IRFilteringRange::default());
+        assert_eq!(IRFilteringRange::Lower(0), IRFilteringRange::default());
     }
 
     #[test]
