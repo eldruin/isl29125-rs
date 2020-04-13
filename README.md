@@ -1,7 +1,9 @@
 # Rust ISL29125 Digital RGB Color Light Sensor with IR Blocking Filter Driver
 
+<!-- TODO
 [![crates.io](https://img.shields.io/crates/v/isl29125.svg)](https://crates.io/crates/isl29125)
 [![Docs](https://docs.rs/isl29125/badge.svg)](https://docs.rs/isl29125)
+-->
 [![Build Status](https://travis-ci.com/eldruin/isl29125-rs.svg?branch=master)](https://travis-ci.com/eldruin/isl29125-rs)
 [![Coverage Status](https://coveralls.io/repos/github/eldruin/isl29125-rs/badge.svg?branch=master)](https://coveralls.io/github/eldruin/isl29125-rs?branch=master)
 
