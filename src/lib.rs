@@ -59,6 +59,66 @@
 //! # }
 //! ```
 //!
+//! ### Measure only the red color
+//!
+//! ```no_run
+//! extern crate linux_embedded_hal as hal;
+//! use isl29125::{Isl29125, OperatingMode};
+//!
+//! # fn main() {
+//! let dev = hal::I2cdev::new("/dev/i2c-1").unwrap();
+//! let mut sensor = Isl29125::new(dev);
+//! sensor
+//!     .set_operating_mode(OperatingMode::RedOnly)
+//!     .unwrap();
+//! loop {
+//!     let red = sensor.red().unwrap();
+//!     println!("Red: {}", red);
+//! }
+//! # }
+//! ```
+//!
+//! ### Print the green color when the thresholds are exceeded 4 times
+//!
+//! ```no_run
+//! extern crate linux_embedded_hal as hal;
+//! use isl29125::{
+//!     Isl29125, OperatingMode, FaultCount, InterruptThresholdAssignment
+//! };
+//!
+//! # fn main() {
+//! let dev = hal::I2cdev::new("/dev/i2c-1").unwrap();
+//! let mut sensor = Isl29125::new(dev);
+//! sensor
+//!     .set_operating_mode(OperatingMode::GreenOnly)
+//!     .unwrap();
+//! let ita = InterruptThresholdAssignment::Green;
+//! sensor.set_interrupt_threshold_assignment(ita).unwrap();
+//! sensor.set_fault_count(FaultCount::Four).unwrap();
+//! sensor.set_interrupt_thresholds(150, 8500).unwrap();
+//! loop {
+//!     while !sensor.status().unwrap().interrupt_triggered {}
+//!     let green = sensor.green().unwrap();
+//!     println!("Green: {}", green);
+//! }
+//! # }
+//! ```
+//!
+//! ### Set the IR filtering
+//!
+//! ```no_run
+//! extern crate linux_embedded_hal as hal;
+//! use isl29125::{Isl29125, IRFilteringRange};
+//!
+//! # fn main() {
+//! let dev = hal::I2cdev::new("/dev/i2c-1").unwrap();
+//! let mut sensor = Isl29125::new(dev);
+//! sensor
+//!     .set_ir_filtering(IRFilteringRange::Lower(35))
+//!     .unwrap();
+//! # }
+//! ```
+//!
 #![deny(unsafe_code, missing_docs)]
 #![no_std]
 
