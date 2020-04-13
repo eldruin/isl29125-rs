@@ -3,9 +3,40 @@
 //!
 //! [`embedded-hal`]: https://github.com/rust-embedded/embedded-hal
 //!
-//! <!-- TODO
 //! This driver allows you to:
-//! -->
+//! - Read all colors. See: [`read()`].
+//! - Read red/green/blue colors individually. See: [`red()`].
+//! - Set operating mode. See: [`set_operating_mode()`].
+//! - Set ADC resolution. See: [`set_resolution()`].
+//! - Set RGB data sensing range. See: [`set_range()`].
+//! - Set IR filtering. See: [`set_ir_filtering()`].
+//! - Read the status flags. See: [`status()`].
+//! - Clear the status flags. See: [`clear_status()`].
+//! - Read the device ID. See: [`device_id()`].
+//! - Perform a software reset. See: [`reset()`].
+//! - Interrupts:
+//!     - Set interrupt thresholds. See: [`set_interrupt_thresholds()`].
+//!     - Set interrupt threshold assignment. See: [`set_interrupt_threshold_assignment()`].
+//!     - Set the fault count. See: [`set_fault_count()`].
+//!     - Set interrupt pin mode. See: [`set_interrupt_pin_mode()`].
+//!     - Enable/Disable generating an interrupt after a conversion is done. See: [`enable_interrupt_on_conversion_done()`].
+//!
+//! [`read()`]: struct.Isl29125.html#method.read
+//! [`red()`]: struct.Isl29125.html#method.red
+//! [`set_operating_mode()`]: struct.Isl29125.html#method.set_operating_mode
+//! [`set_resolution()`]: struct.Isl29125.html#method.set_resolution
+//! [`set_range()`]: struct.Isl29125.html#method.set_range
+//! [`set_ir_filtering()`]: struct.Isl29125.html#method.set_ir_filtering
+//! [`status()`]: struct.Isl29125.html#method.status
+//! [`clear_status()`]: struct.Isl29125.html#method.clear_status
+//! [`device_id()`]: struct.Isl29125.html#method.device_id
+//! [`reset()`]: struct.Isl29125.html#method.reset
+//! [`set_interrupt_thresholds()`]: struct.Isl29125.html#method.set_interrupt_thresholds
+//! [`set_interrupt_threshold_assignment()`]: struct.Isl29125.html#method.set_interrupt_threshold_assignment
+//! [`set_fault_count()`]: struct.Isl29125.html#method.set_fault_count
+//! [`set_interrupt_pin_mode()`]: struct.Isl29125.html#method.set_interrupt_pin_mode
+//! [`enable_interrupt_on_conversion_done()`]: struct.Isl29125.html#method.enable_interrupt_on_conversion_done
+//!
 //!
 //! <!-- TODO
 //! [Introductory blog post](TODO)

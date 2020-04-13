@@ -10,9 +10,24 @@
 This is a platform agnostic Rust driver for the low-power digital RGB color
 light sensor with IR blocking filter using the [`embedded-hal`] traits.
 
-<!-- TODO
 This driver allows you to:
--->
+- Read all colors. See: `read()`.
+- Read red/green/blue colors individually. See: `red()`.
+- Set operating mode. See: `set_operating_mode()`.
+- Set ADC resolution. See: `set_resolution()`.
+- Set RGB data sensing range. See: `set_range()`.
+- Set IR filtering. See: `set_ir_filtering()`.
+- Read the status flags. See: `status()`.
+- Clear the status flags. See: `clear_status()`.
+- Read the device ID. See: `device_id()`.
+- Perform a software reset. See: `reset()`.
+- Interrupts:
+    - Set interrupt thresholds. See: `set_interrupt_thresholds()`.
+    - Set interrupt threshold assignment. See: `set_interrupt_threshold_assignment()`.
+    - Set the fault count. See: `set_fault_count()`.
+    - Set interrupt pin mode. See: `set_interrupt_pin_mode()`.
+    - Enable/Disable generating an interrupt after a conversion is done. See: `enable_interrupt_on_conversion_done()`.
+
 <!-- TODO
 [Introductory blog post]()
 -->
