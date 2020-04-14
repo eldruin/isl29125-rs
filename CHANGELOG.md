@@ -8,3 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ...
+
+## 0.1.0 - 2020-04-14
+
+Initial release of the functionally complete driver to crates.io.
+
+[Unreleased]: https://github.com/eldruin/isl29125-rs/compare/v0.1.0...HEAD
