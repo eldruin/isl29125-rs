@@ -42,7 +42,7 @@
 //! [Introductory blog post](TODO)
 //! -->
 //!
-//! ## The devices
+//! ## The device
 //!
 //! The ISL29125 is a low power, high sensitivity, RED, GREEN and BLUE color
 //! light sensor (RGB) with an I2C (SMBus compatible) interface. Its
