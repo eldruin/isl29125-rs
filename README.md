@@ -2,7 +2,7 @@
 
 [![crates.io](https://img.shields.io/crates/v/isl29125.svg)](https://crates.io/crates/isl29125)
 [![Docs](https://docs.rs/isl29125/badge.svg)](https://docs.rs/isl29125)
-[![Build Status](https://travis-ci.com/eldruin/isl29125-rs.svg?branch=master)](https://travis-ci.com/eldruin/isl29125-rs)
+[![Build Status](https://github.com/eldruin/isl29125-rs/workflows/Build/badge.svg)](https://github.com/eldruin/isl29125-rs/actions?query=workflow%3ABuild)
 [![Coverage Status](https://coveralls.io/repos/github/eldruin/isl29125-rs/badge.svg?branch=master)](https://coveralls.io/github/eldruin/isl29125-rs?branch=master)
 
 This is a platform agnostic Rust driver for the low-power digital RGB color
